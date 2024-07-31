@@ -1,0 +1,30 @@
+
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: backup-cronjob
+spec:
+  schedule: "*/5 * * * *" # Schedule the job to run every 5 minutes
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: backup-container
+              image: backupcontainer # Replace with your Docker image name and tag
+              imagePullPolicy: Always # Change the policy as needed
+              envFrom:
+                - secretRef:
+                    name: api-credentials
+              command:
+                - /bin/sh
+                - -c
+                - "echo 'Hello, Doing Backup'"
+              volumeMounts:
+                - name: data-volume
+                  mountPath: /data
+          volumes:
+            - name: data-volume
+              persistentVolumeClaim:
+                claimName: data-pvc
+          restartPolicy: OnFailure

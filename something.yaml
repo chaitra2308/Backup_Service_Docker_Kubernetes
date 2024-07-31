@@ -1,0 +1,16 @@
+#you can fill this with appropriate kubenetes configuration
+# You are free to explore and figure out how Kubernetes config files are written
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: backup-cronjob
+spec:
+  schedule: "0 0 * * *"  # This schedule runs the job daily at midnight
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: backup-container
+            image: project:latest  # Replace 'project' with the name of your Docker image
+            restartPolicy: OnFailure

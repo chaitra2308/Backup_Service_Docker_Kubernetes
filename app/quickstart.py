@@ -15,8 +15,6 @@ from google.oauth2.credentials import Credentials
 import os
 
 SCOPES=['https://www.googleapis.com/auth/gmail.readonly','https://www.googleapis.com/auth/drive','https://www.googleapis.com/auth/drive.file','https://www.googleapis.com/auth/drive.metadata']
-#archive_location = "C:/Users/pchai/OneDrive/Desktop/cloud/Project-5/Archive/app/archive"
-#backup_path = "C:/Users/pchai/OneDrive/Desktop/cloud/Project5"
 archive_location="/app/archive"
 backup_path="/app/cloud"
 
@@ -41,14 +39,14 @@ def authenticate():
             print("else creds",creds)
         # Save the credentials for the next run
 
-    print("After",creds)
+    #print("After",creds)
     with open("token.json", "w") as token:
          token.write(creds.to_json())
     return creds
 
 def upload_file(service, file_path, folder_id=None):
     """Upload a file to Google Drive."""
-    print("hello1")
+    #print("hello1")
     
     print("File path:", file_path)
 
@@ -59,10 +57,10 @@ def upload_file(service, file_path, folder_id=None):
     file_metadata = {
         'name': os.path.basename(file_path)
     }
-    print("hello2")
+    #print("hello2")
     if folder_id:
         file_metadata['parents'] = [folder_id]
-    print("hello3")
+    #print("hello3")
 
     media = MediaFileUpload(file_path, resumable=True)
     print("media:",media)
